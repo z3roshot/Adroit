@@ -7,6 +7,10 @@
     "cqrs",
     "eventstore"
   ],
+  "repository" :{
+    "type" : "git",
+    "url" : "http://github.com/npm/npm.git"
+  },
   "author": "Christopher Gillis <christopher.l.gillis@gmail.com>",
   "license": "MIT"
 }

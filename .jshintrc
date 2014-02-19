@@ -1,0 +1,14 @@
+{
+	"undef"         : true,
+	"unused"        : true,
+	"eqeqeq"        : true,
+	"node"          : true,
+	"es3"           : false,
+	"browser"       : true,
+	"devel"         : false,
+	"strict"        : true,
+	"globalstrict"  : true,
+	"smarttabs"     : true,
+	"curly"         : true,
+	"trailing"      : true
+}

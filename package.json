@@ -2,15 +2,26 @@
   "name": "adroit",
   "version": "0.0.2",
   "description": "A CQRS and Event Sourced architecture for node.js",
-  "main": "index.js",
+  "main": "adroit.js",
   "keywords": [
     "cqrs",
     "eventstore"
   ],
-  "repository" :{
-    "type" : "git",
-    "url" : "https://github.com/Tapography/Adroit.git" 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tapography/Adroit.git"
   },
   "author": "Christopher Gillis <christopher.l.gillis@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "q": "~1.0.0",
+    "redis": "~0.10.1",
+    "eventstore": "~0.7.5",
+    "eventstore.redis": "~0.7.1",
+    "node-uuid": "~1.4.1",
+    "riak-js": "~0.10.2"
+  },
+  "devDependencies": {
+    "jshint": "~2.4.3"
+  }
 }

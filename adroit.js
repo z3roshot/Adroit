@@ -3,7 +3,9 @@
 var command = require('./lib/command'),
 	eventstore = require('./lib/eventstore'),
 	projection = require('./lib/projection'),
-	storage = require('./lib/storage');
+	storage = require('./lib/storage'),
+	queue = require('./lib/queue'),
+	aggregateLoader = require('./lib/aggregateloader');
 
 var q = require('q'),
 	uuid = require('node-uuid');
@@ -15,7 +17,6 @@ var q = require('q'),
  * config.riakConfig = { ... }
  * @param config
  */
-
 exports.adroit = function(config){
 	require('./lib/redis').init(config.redisConfig);
 	require('./lib/riak').init(config.riakConfig);
@@ -23,29 +24,18 @@ exports.adroit = function(config){
 
 exports.queueCommand = command.queueCommand;
 
-exports.saveAndPublishEvent = storage.saveAndPublishEvent;
+exports.commitEvent = storage.saveAndPublishEvent;
 
+/**
+ * Projection functions
+ */
 exports.loadUI = projection.loadUI;
 exports.createUI = projection.createUI;
 exports.updateUI = projection.updateUI;
 
-exports.loadAggregate = loadAggregate;
+exports.subscribe = queue.subscribe;
 
-function loadAggregate(aggregateId, loadFunc){
-	var deferred = q.deferred();
-
-	eventstore.getEventStream(aggregateId)
-	.then(function(stream){
-		var aggregate = loadFunc(stream.events);
-		aggregate.stream = stream;
-		deferred.resolve(aggregate);
-	})
-	.then(function(err){
-		deferred.reject(err);
-	});
-
-	return deferred.promise;
-}
+exports.loadAggregate = aggregateLoader.loadAggregate;
 
 exports.newId = function(){
 	return uuid.v4();

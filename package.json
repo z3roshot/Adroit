@@ -19,7 +19,8 @@
     "eventstore": "~0.7.5",
     "eventstore.redis": "~0.7.1",
     "node-uuid": "~1.4.1",
-    "riak-js": "~0.10.2"
+    "riak-js": "~0.10.2",
+    "node-rmq": "0.0.4"
   },
   "devDependencies": {
     "jshint": "~2.4.3"

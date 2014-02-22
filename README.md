@@ -1,4 +1,24 @@
-### Adroit
+# Adroit
+
+### Installation
+```bash
+npm install adroit
+```
+
+### Before you begin
+This library suggests an architecture based on CQRS technique of writing software with a focus on Domain Driven Design (DDD). If you are unfamiliar with these concepts, you should read about them before trying to use this library.
+
+## Usage
+
+### Aggregate aka Aggregate Root
+```javascript
+var adroit = require('adroit');
+
+var aggregate = adroit.loadAggregate(aggregateId, loadFunction);
+
+```
+
+Generally loadFunction will be defined in your aggregate object. The purpose of this function is to apply an event to your aggregate. The event stream that represents the state of your aggregate will be applied individually and the function will return your reconstituted aggregate.
 
 ### License
 

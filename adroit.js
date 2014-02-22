@@ -8,7 +8,8 @@ var command = require('./lib/command'),
 	aggregateLoader = require('./lib/aggregateloader');
 
 var q = require('q'),
-	uuid = require('node-uuid');
+	uuid = require('node-uuid'),
+	_ = require('lodash');
 
 /**
  * Entry point for Adroit
@@ -33,7 +34,12 @@ exports.loadUI = projection.loadUI;
 exports.createUI = projection.createUI;
 exports.updateUI = projection.updateUI;
 
-exports.subscribe = queue.subscribe;
+exports.subscribe = function(channel, callback, errCallback){
+	errCallback = errCallback || _.noop;
+
+
+	queue.subscribe(channel, callback, errCallback);
+}
 
 exports.loadAggregate = aggregateLoader.loadAggregate;
 

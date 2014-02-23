@@ -38,14 +38,6 @@ adroit.adroit({
 });
 ```
 
-### Aggregate aka Aggregate Root
-```javascript
-var aggregate = adroit.loadAggregate(aggregateId, loadFunction);
-
-```
-
-Generally loadFunction will be defined in your aggregate object. The purpose of this function is to apply an event to your aggregate. The event stream that represents the state of your aggregate will be applied individually and the function will return your reconstituted aggregate.
-
 ### Command Queueing
 ```javascript
 var data = {
@@ -55,7 +47,73 @@ var data = {
 adroit.queueCommand(data)
 ```
 
+### Aggregate aka Aggregate Root
+adroit.loadAggregate reconstitutes an aggregate via a promise. This aggregate will also have the stream object that was used to reconstitute it.
 
+```javascript
+adroit.loadAggregate(aggregateId, loadFunction)
+.then(function(aggregate){
+  var stream = aggregate.stream;
+  ...
+},
+function(error){
+  // Handle error here
+});
+
+```
+
+Generally loadFunction will be defined in your aggregate object. The purpose of this function is to apply an event to your aggregate. The event stream that represents the state of your aggregate will be applied individually and the function will return your reconstituted aggregate.
+
+
+### Committing an event
+Once you've processed the commands and have generated one or more events that you'd like to save and publish to the message bus, you should commit your changes like this. You will need a reference to the stream object returned when you loaded the aggregate. This call returns a promise that resolves true or rejects with any error condition.
+
+```javascript
+adroit.commitEvent(stream, eventData)
+.then(function(willBeTrue){
+  // any post processing
+},
+function(error){
+  // handle error
+});
+```
+
+### Projection functions
+These functions are intended to interact with the read model.
+
+```javascript
+adroit.loadUI(viewName, viewKey).
+then(function(view){
+
+},
+function(error){
+
+});
+
+adroit.createUI(viewName, viewKey, data)
+.then(function(willBeTrue){
+
+},
+function(error){
+
+});
+
+adroit.updateUI // same signature as createUI
+```
+
+### Subscriptions
+Subscribing to messages on the message bus (commands, events). Channel can be "commands", "events", particular command or event names, or whatever you want. Parameter errorCallback is optional.
+
+```javascript
+adroit.subscribe(channel, callback, errorCallback);
+```
+
+### Generating IDs
+As a convenience, Adroit will generate UUIDs for you if you decide ot use UUIDs for your application.
+
+```javascript
+var id = adroit.newId();
+```
 
 ### License
 

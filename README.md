@@ -8,17 +8,54 @@ npm install adroit
 ### Before you begin
 This library suggests an architecture based on CQRS technique of writing software with a focus on Domain Driven Design (DDD). If you are unfamiliar with these concepts, you should read about them before trying to use this library.
 
+Currently Adroit uses [Riak](http://basho.com/riak/) to serve the read model and [Redis](http://redis.io/) for an event store as well as a message bus (using [node-rmq](https://github.com/z3roshot/node-rmq)).
+
 ## Usage
+
+### Getting a reference to the Adroit object
+```javascript
+var adroit = require('adroit');
+```
+
+### Initialization
+Note that if you do not initialize, adroit will assume you have riak and/or redis running with default settings on localhost.
+
+Adroit uses [node-redis](https://github.com/mranney/node_redis) and [riak-js](https://github.com/mostlyserious/riak-js). Look at those projects if you want to see how they work.
+
+```javascript
+adroit.adroit({
+  riakConfig: {
+    host: 'host.of.riak.instance',
+    port: 8098 // or whatever port you use
+  },
+  redisConfig: {
+    host: 'host.of.redis.instance',
+    port: 6379, // or whatever port you use
+    options: {
+      ...
+    }
+  }
+});
+```
 
 ### Aggregate aka Aggregate Root
 ```javascript
-var adroit = require('adroit');
-
 var aggregate = adroit.loadAggregate(aggregateId, loadFunction);
 
 ```
 
 Generally loadFunction will be defined in your aggregate object. The purpose of this function is to apply an event to your aggregate. The event stream that represents the state of your aggregate will be applied individually and the function will return your reconstituted aggregate.
+
+### Command Queueing
+```javascript
+var data = {
+  commandName: 'doThingsAndStuff',
+  otherFields: goHere
+};
+adroit.queueCommand(data)
+```
+
+
 
 ### License
 

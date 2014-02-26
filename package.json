@@ -1,6 +1,6 @@
 {
   "name": "adroit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A CQRS and Event Sourced architecture for node.js",
   "main": "adroit.js",
   "keywords": [

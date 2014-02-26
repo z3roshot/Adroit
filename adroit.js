@@ -30,7 +30,29 @@ exports.commitEvent = storage.saveAndPublishEvent;
 /**
  * Projection functions
  */
-exports.loadUI = projection.loadUI;
+exports.loadUI = function loadUI(viewName, viewId){
+	var deferred = q.defer();
+	projection.exists(viewName, viewId)
+	.then(function(result){
+		if(result){
+			projection.loadUI(viewName, viewId)
+			.then(function(data){
+				deferred.resolve(data);
+			},
+			function(err){
+				deferred.reject(err);
+			});
+		}
+		else{
+			deferred.resolve({});
+		}
+
+
+	});
+
+	return deferred.promise;
+}
+
 exports.createUI = projection.createUI;
 exports.updateUI = projection.updateUI;
 

@@ -63,8 +63,22 @@ exports.subscribe = function(channel, callback, errCallback){
 	queue.subscribe(channel, callback, errCallback);
 }
 
-exports.loadAggregate = aggregateLoader.loadAggregate;
+exports.loadAggregate = function loadAggregate(aggregateId, loadFunc){
+	if(!_.isFunction(loadFunc)){
+		loadFunc = getDefaultLoadFunc(loadFunc)
+	}
+
+	aggregateLoader.loadAggregate(aggregateId, loadFunc);
+}
 
 exports.newId = function(){
 	return uuid.v4();
 };
+
+function getDefaultLoadFunc(map){
+	return function defaultLoadFromHistory(id, events){
+		return _.reduce(events, function(aggregate, event){
+			return map[event.payload.eventName](aggregate, event.payload);
+		}, { id: id });
+	};
+}

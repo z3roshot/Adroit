@@ -68,7 +68,7 @@ exports.loadAggregate = function loadAggregate(aggregateId, loadFunc){
 		loadFunc = getDefaultLoadFunc(loadFunc)
 	}
 
-	aggregateLoader.loadAggregate(aggregateId, loadFunc);
+	return aggregateLoader.loadAggregate(aggregateId, loadFunc).promise;
 }
 
 exports.newId = function(){

@@ -2,7 +2,7 @@
 
 var command = require('./lib/command'),
 	eventstore = require('./lib/eventstore'),
-	projection = require('./lib/projection'),
+	repository = require('./lib/repository'),
 	storage = require('./lib/storage'),
 	queue = require('./lib/queue'),
 	aggregateLoader = require('./lib/aggregateloader');
@@ -32,10 +32,10 @@ exports.commitEvent = storage.saveAndPublishEvent;
  */
 exports.loadUI = function loadUI(viewName, viewId){
 	var deferred = q.defer();
-	projection.exists(viewName, viewId)
+	repository.exists(viewName, viewId)
 	.then(function(result){
 		if(result){
-			projection.loadUI(viewName, viewId)
+			repository.loadUI(viewName, viewId)
 			.then(function(data){
 				deferred.resolve(data);
 			},
@@ -53,8 +53,8 @@ exports.loadUI = function loadUI(viewName, viewId){
 	return deferred.promise;
 }
 
-exports.createUI = projection.createUI;
-exports.updateUI = projection.updateUI;
+exports.createUI = repository.createUI;
+exports.updateUI = repository.updateUI;
 
 exports.subscribe = function(channel, callback, errCallback){
 	errCallback = errCallback || _.noop;

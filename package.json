@@ -21,7 +21,8 @@
     "node-uuid": "~1.4.1",
     "riak-js": "~0.10.2",
     "node-rmq": "0.0.4",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "async": "~0.2.10"
   },
   "devDependencies": {
     "jshint": "~2.4.3"

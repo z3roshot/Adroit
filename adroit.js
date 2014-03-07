@@ -53,7 +53,12 @@ exports.loadUI = function loadUI(viewName, viewId){
 	return deferred.promise;
 }
 
-exports.createUI = repository.createUI;
+exports.createUI = function createUI(viewName, viewId, data){
+	data.id = viewId;
+
+	repository.createUI(viewName, viewId, data);
+};
+
 exports.updateUI = repository.updateUI;
 
 exports.subscribe = function(channel, callback, errCallback){
